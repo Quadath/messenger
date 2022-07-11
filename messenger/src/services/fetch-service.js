@@ -6,6 +6,15 @@ export const RegisterRequest = (username, password) => {
     }
     return SendData(body);
 }   
+export const LoginRequest = (username, password) => {
+    const body = {
+        type: "login",
+        username: username,
+        password: password
+    }
+    return SendData(body);
+}   
+
 
 async function SendData(data) {
     const URL = 'http://34.203.247.249:5000/post';

@@ -15,10 +15,7 @@ function App() {
       <AppHeader>
         <ul>
           <li>
-            <Link to='/register'>Register</Link>
-          </li>
-          <li>
-            <Link to='/login'>Login</Link>
+            <Link to='/register'>Sign up</Link>
           </li>
         </ul>
       </AppHeader>

@@ -18,11 +18,20 @@ query = Query()
 
 def register(data):
     if users_db.search(query.username == data['username']):
-        print('this account already exist')
         return {'answer': 'this username already busy.'}
     else:
         users_db.insert({"username" : data['username'], 'chats': [], 'password': data['password']})
         return {'answer': 'account successfully created!'}
+def login(data):
+    user = users_db.search(query.username == data['username'])[0]
+    print(user)
+    if not user: 
+        return {'answer': f"No account with username {data['username']}"}
+    if user['password'] == data['password']:
+        return {'answer': 'Succesfully logged!'}
+    else:
+        return {'answer': 'Wrong password!'}
+    
 
 @app.route('/post', methods=['POST','OPTIONS'])
 @cross_origin(origin='*',headers=['Content-Type','Authorization'])
@@ -30,6 +39,8 @@ def post():
     content = request.json
     if content['type'] == 'register':
         return jsonify(register(request.json))
+    elif content['type'] == 'login':
+        return jsonify(login(request.json))
     return jsonify({'answer': 'default'})
     
 @app.route("/", methods=['GET'])
