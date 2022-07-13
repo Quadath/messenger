@@ -14,7 +14,10 @@ export const LoginRequest = (username, password) => {
     }
     return SendData(body);
 }   
-
+SendData({
+    type: "user-search",
+    selector: 'watermelon'
+}).then(res => console.log(res))
 
 async function SendData(data) {
     const URL = 'http://34.203.247.249:5000/post';

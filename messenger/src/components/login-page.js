@@ -1,6 +1,5 @@
 import React, { Component } from "react";
 import { RegisterRequest, LoginRequest } from "../services/fetch-service";
-import { Link } from "react-router-dom";
 
 import '../sass/login-page.sass'
 
@@ -20,7 +19,7 @@ export default class LoginPage extends Component {
         this.sendData = this.sendData.bind(this)
     
     }
-
+    
     onUsernameChanged(e) {
         const text = e.target.value.replace(/[^a-z0-9]/gi,'').slice(0, 16);
         this.setState({
@@ -63,11 +62,18 @@ export default class LoginPage extends Component {
         } else {
             LoginRequest(username, password).then(answer => {
                 console.log(answer)
+                if (answer.answer === 'Succesfully logged!') {
+                    this.LoginSuccess(username, password)
+                }
                 this.setState({
                     status: answer.answer
                 })
             })
         }
+    }
+    LoginSuccess(username, password) {
+        localStorage.setItem('username', username)
+        localStorage.setItem('password', password)
     }
 
     render() {

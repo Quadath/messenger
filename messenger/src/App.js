@@ -1,6 +1,7 @@
 import './App.css';
 import AppHeader from './components/app-header';
 import LoginPage from './components/login-page';
+import ChatsPage from './components/chats-page';
 
 import {
   BrowserRouter as Router,
@@ -8,23 +9,40 @@ import {
   Route,
   Link
 } from "react-router-dom";
+import { Component } from 'react';
 
-function App() {
-  return (
-    <Router>
-      <AppHeader>
-        <ul>
-          <li>
-            <Link to='/register'>Sign up</Link>
-          </li>
-        </ul>
-      </AppHeader>
-      <Routes>
-        <Route path='/register' element={<LoginPage/>}>
-        </Route>
-      </Routes>
-    </Router>
-  );
+export default class App extends Component {
+  
+  constructor() {
+    super();
+    this.state = {
+      chats: {
+
+      },
+      usernameSearchQuery: ''
+    }
+  }
+
+  render() {
+    return (
+      <Router>
+        <Routes>
+          <Route path='/register' element={
+            <div>
+              <AppHeader>
+                <ul>
+                  <li>
+                  <Link to='/register'>Sign up</Link>
+                  </li>
+                 </ul>
+              </AppHeader>
+              <LoginPage/>
+            </div>
+          }/>
+          <Route path='/chats' element={<ChatsPage/>}/>
+        </Routes>
+      </Router>
+    );
+  }
 }
 
-export default App;

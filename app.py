@@ -31,16 +31,24 @@ def login(data):
         return {'answer': 'Succesfully logged!'}
     else:
         return {'answer': 'Wrong password!'}
-    
+def user_search(selector):
+    users = users_db.search(query.username == selector)
+    if len(users) > 0:
+        return users
+    else:
+        return 'not found'
 
 @app.route('/post', methods=['POST','OPTIONS'])
 @cross_origin(origin='*',headers=['Content-Type','Authorization'])
 def post():
     content = request.json
     if content['type'] == 'register':
-        return jsonify(register(request.json))
+        return jsonify(register(content))
     elif content['type'] == 'login':
-        return jsonify(login(request.json))
+        return jsonify(login(content))
+    elif content['type'] == 'user-search':
+        return jsonify(user_search(content['selector']))
+        
     return jsonify({'answer': 'default'})
     
 @app.route("/", methods=['GET'])
